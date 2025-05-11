@@ -2,6 +2,7 @@
 session_start();
 include 'db/koneksi.php';
 
+// login.php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Cek apakah email dan password ada di POST
     if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -31,10 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     showConfirmButton: false,
                     timer: 2000,
                     timerProgressBar: true,
-                    // jika role sama dengan admin maka ke halaman dashboard
-                    // jika role sama dengan user maka ke halaman index
                     didClose: () => {
-                        window.location.href = '".$user['role']."' === 'admin' ? 'dashboard.php' : 'index.php';
+                        window.location.href = '" . ($user['role'] === 'admin' ? 'dashboard.php' : 'index.php') . "';
                     }
                 });
             });
@@ -114,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="card-body">
                 <form method="POST">
                     <div class="form-group">
-                        <input class="form-control form-control-lg" type="email" name="email" placeholder="Username"
+                        <input class="form-control form-control-lg" type="email" name="email" placeholder="Email"
                             autocomplete="off">
                     </div>
                     <div class="form-group">
@@ -130,9 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
                 </form>
             </div>
-            <div class="card-footer bg-white p-0  ">
+            <div class="card-footer bg-white p-0">
                 <div class="card-footer-item card-footer-item-bordered">
-                    <a href="#" class="footer-link">Create An Account</a>
+                    <a href="register.php" class="footer-link">Create An Account</a>
                 </div>
                 <div class="card-footer-item card-footer-item-bordered">
                     <a href="#" class="footer-link">Forgot Password</a>

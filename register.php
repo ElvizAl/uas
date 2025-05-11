@@ -5,6 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($koneksi, $_POST['username']);
     $email = mysqli_real_escape_string($koneksi, $_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = 'user'; // Default role adalah user
 
     // Cek apakah username atau email sudah ada
     $cek_user = mysqli_query($koneksi, "SELECT * FROM users WHERE username='$username' OR email='$email'");
@@ -26,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </script>";
     } else {
         // Query tambah user
-        $query = "INSERT INTO users (username, email, password) 
-                  VALUES ('$username', '$email', '$password')";
+        $query = "INSERT INTO users (username, email, password, role) 
+                  VALUES ('$username', '$email', '$password', '$role')";
         
         if (mysqli_query($koneksi, $query)) {
             echo "<script>
